@@ -1,0 +1,150 @@
+﻿@model GrantRequests.WEB.Models.ScientificFundingRequestInformationViewModel
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TherapeuticArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TherapeuticArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsThereEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsThereEvent)
+        </dd>
+        @if (Model.IsThereEvent)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventAgenda)
+            </dt>
+
+            <dd>
+                @if (Model.EventAgenda != null)
+                {
+                    @Html.ActionLink("Download", "GetFile", new { fileName = Model.EventAgenda })
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VenueName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.VenueName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+
+            if (Model.CountryId == 1)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.State)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.State)
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.StateProvinceTerritory)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StateProvinceTerritory)
+                </dd>
+            }
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AddressLine1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AddressLine1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AddressLine2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AddressLine2)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AddressLine3)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AddressLine3)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PostalCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfAttendees)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfAttendees)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsEducationalPortion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsEducationalPortion)
+            </dd>
+        }
+    </dl>
+</div>

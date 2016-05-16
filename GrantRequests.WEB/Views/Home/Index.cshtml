@@ -1,0 +1,26 @@
+﻿@using GrantRequests.Common;
+@model IEnumerable<GrantRequests.WEB.Models.RequestShortViewModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-md-12">
+        @if (User.Identity.GetRole() == Role.Requestor)
+        {
+            using (Html.BeginForm("CreateRequest", "Home"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-inline">
+                    <label class="h5 text-info">Submit a request for funding </label>
+                    <select class="form-control dropdown " name="requestType">
+                        <option value="@RequestType.ScientificFunding">@RequestType.ScientificFunding</option>
+                        <option value="@RequestType.PatientAdvocasy">@RequestType.PatientAdvocasy</option>
+                        <option value="@RequestType.DisplayAndExhibit">@RequestType.DisplayAndExhibit</option>
+                    </select>
+                    <input type="submit" value="Submit a Request" class="btn btn-primary btn-sm" />
+                </div>
+            }
+        }
+        @Html.Partial("DetailsView/_ViewRequestList", Model)
+    </div>
+</div>

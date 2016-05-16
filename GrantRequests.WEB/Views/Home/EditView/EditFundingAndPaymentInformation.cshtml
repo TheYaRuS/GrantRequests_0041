@@ -1,0 +1,149 @@
+﻿@model GrantRequests.WEB.Models.PaymentInformationViewModel
+@using GrantRequests.Common
+@*<h2>Payment Information for <span class="text-primary">@string.Format("{0}-{1,0:D5}", Model.RequestType.GetDescription(), Model.RequestId)</span> </h2>*@
+
+
+@using (Html.BeginForm(GrantRequests.WEB.Models.PaymentInformationViewModel.actionName, GrantRequests.WEB.Models.PaymentInformationViewModel.controllerName, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />        
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.RequestId)
+        @Html.HiddenFor(model => model.RequestType)
+        @Html.HiddenFor(model => model.FundingRequestLetter)
+        @Html.HiddenFor(model => model.DifferentLevelsOfFunding)
+        @Html.HiddenFor(model => model.IsValid)
+        @Html.HiddenFor(model => model.verificationPart[0])
+        @Html.HiddenFor(model => model.verificationPart[1])
+        @Html.HiddenFor(model => model.verificationPart[2])
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RequestedFunding, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.RequestedFunding, new { htmlAttributes = new { @class = "form-control", placeholder = "$ xxx,xxx,xxx.yy" } })
+                @Html.ValidationMessageFor(model => model.RequestedFunding, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalProgramCost, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.TotalProgramCost, new { htmlAttributes = new { @class = "form-control", placeholder = "$ xxx,xxx,xxx.yy" } })
+                @Html.ValidationMessageFor(model => model.TotalProgramCost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <!--Create Program Budget Breakdown-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.BudgetBreakdown, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                <div class="container" id="programBudget">
+                    <button id="CreateProgramBudgetBreakdown" type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#BudgetBreakdown">
+                        Create
+                    </button>
+                    <button style="display:none" id="UpdateProgramBudgetBreakdown" type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#BudgetBreakdown">
+                        Update
+                    </button>                   
+                    <div class="modal fade" id="BudgetBreakdown" role="dialog">
+                        <div class="modal-dialog modal-lg ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Program Budget Breakdown</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Partial("EditView/_EditBudgetBreakdown", Model)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="saveForBudgetBreakdown">Save</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelForBudgetBreakdown">Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <!--/Create Program Budget Breakdown-->
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FundingRequestLetterFile, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.FundingRequestLetterFile, new { type = "file", @class = "form-control file" })
+                @if (Model.FundingRequestLetter != null)
+                {
+                    @Html.ActionLink("Download", "GetFile", new { fileName = Model.FundingRequestLetter })
+                }
+                @Html.ValidationMessageFor(model => model.FundingRequestLetterFile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AreDifferentLevelsOfFunding, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.AreDifferentLevelsOfFunding, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AreDifferentLevelsOfFunding, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="differentLevelContainer">
+            @Html.LabelFor(model => model.DifferentLevelsOfFundingDescription, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DifferentLevelsOfFundingDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.DifferentLevelsOfFundingFile, new { type = "file", @class = "form-control file" })
+                @if (Model.DifferentLevelsOfFunding != null)
+                {
+                    @Html.ActionLink("Download", "GetFile", new { fileName = Model.DifferentLevelsOfFunding })
+                }
+                @Html.ValidationMessageFor(model => model.DifferentLevelsOfFundingDescription, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.DifferentLevelsOfFundingFile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AreOpportunitiesOrBenefits, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.AreOpportunitiesOrBenefits, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AreOpportunitiesOrBenefits, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="benefitContainer">
+            @Html.LabelFor(model => model.OpportunitiesOrBenefitsId, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.ListBoxFor(model => model.OpportunitiesOrBenefitsId, Model.ViewDataService.ListOfBenefits, new { @class = "form-control list-box", size = Model.ViewDataService.ListOfBenefits.Count() })
+                @Html.ValidationMessageFor(model => model.OpportunitiesOrBenefitsId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsOrganizationOrPhysicianPractice, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.IsOrganizationOrPhysicianPractice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsOrganizationOrPhysicianPractice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                @if (!Model.IsValid)
+                {
+                    <input name="action" type="submit" value="Save" class="btn btn-danger" />
+                }
+                @if (Model.verificationPart.Count(o => o) >= 2 && !Model.IsValid)
+                {
+                    <input name="action" type="submit" value="Submit" class="btn btn-success" onclick="return confirm('Are you sure you want to submit this request?')" />
+                }
+                else
+                {
+                    <input name="action" type="submit" value="Proceed" class="btn btn-success" />
+                }
+            </div>
+        </div>
+    </div>
+}
+

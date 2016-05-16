@@ -1,0 +1,23 @@
+﻿@model GrantRequests.WEB.Models.BudgetBreakdownLineViewModel
+
+<tr>
+    @using (Html.BeginCollectionItem("BudgetBreakdown"))
+    {
+
+        <td>
+            @Html.EditorFor(model => model.ExpenseType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ExpenseType, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(model => model.EstimatedTotal, new { htmlAttributes = new { @class = "form-control estotal", placeholder = "$ xxx,xxx,xxx.yy" } })
+            @Html.ValidationMessageFor(model => model.EstimatedTotal, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            <a href="javascript: void(0);" class="RemoveBudgetBreakdown">Remove</a>
+        </td>
+    }
+</tr>

@@ -1,0 +1,59 @@
+﻿@model GrantRequests.WEB.Models.PaymentInformationViewModel
+@using GrantRequests.WEB.Models;
+
+@{
+    var routeValueDictionary = new RouteValueDictionary();
+    routeValueDictionary.Add("requestId", Model.RequestId);
+    routeValueDictionary.Add("requestType", Model.RequestType);
+    for (int i = 0; i < Model.verificationPart.Length; i++)
+    {
+        routeValueDictionary.Add("verificationPart[" + i + "]", Model.verificationPart[i].ToString());
+    }
+}
+
+<h2 class="text-center">Create Request <span class="text-primary">@string.Format("{0}-{1:D5}", Model.RequestType.GetDescription(), Model.RequestId)</span></h2>
+
+<div class="headerRequest col-md-12">
+
+</div>
+<div class="mainMenuRequest col-md-4 container">
+
+    @if (Model.verificationPart[0])
+    {
+        @Html.ActionLink("Contact Information", "ContactInformation", routeValueDictionary, new Dictionary<string, object> { { "class", "btn btn-success col-md-12" } })
+    }
+    else
+    {
+        @Html.ActionLink("Contact Information", "ContactInformation", routeValueDictionary, new Dictionary<string, object> { { "class", "btn btn-default col-md-12" } })
+    }
+    @if (Model.verificationPart[1])
+    {
+        @Html.ActionLink("Request Information", "RequestInformation", routeValueDictionary, new Dictionary<string, object> { { "class", "btn btn-success col-md-12" } })
+    }
+    else
+    {
+        @Html.ActionLink("Request Information", "RequestInformation", routeValueDictionary, new Dictionary<string, object> { { "class", "btn btn-default col-md-12" } })
+    }   
+
+    @Html.ActionLink("Payment Information", "PaymentInformation",routeValueDictionary, new Dictionary<string, object> { { "class", "btn btn-primary col-md-12" } })
+
+    <form id="formInformation">
+        @Html.Hidden("requestId",Model.Id)
+        @Html.Hidden("requestType",Model.RequestType)
+    </form>
+</div>
+<div id="informationRequest"class="col-md-8">
+    @Html.Partial(PaymentInformationViewModel.editView, Model);
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/custom")
+    <script>
+        BudgetBreakdown.Init();
+        DifferentLevelSelector.Init(
+            "#@Html.IdFor(o => o.AreDifferentLevelsOfFunding)");
+        BenefitSelector.Init(
+            "#@Html.IdFor(o => o.AreOpportunitiesOrBenefits)")
+    </script>>
+}
+

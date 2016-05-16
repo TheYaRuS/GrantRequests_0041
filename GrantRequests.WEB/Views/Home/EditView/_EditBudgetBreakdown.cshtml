@@ -1,0 +1,35 @@
+﻿@model GrantRequests.WEB.Models.PaymentInformationViewModel
+
+<table class="table" id="EditTable">
+    <thead>
+        <tr>
+            <th>
+                Expense Type
+            </th>
+            <th>
+                Estimated Total 
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.BudgetBreakdown != null)
+        {
+            for (int i = 0; i < Model.BudgetBreakdown.Length; i++)
+            {
+                @Html.Partial("EditView/_EditField", Model.BudgetBreakdown[i])
+            }
+        }
+
+    </tbody>
+
+</table>
+<p>
+    <a href="javascript: void(0);" class="AddBudgetBreakdown">Add Line Item</a>
+</p>
+<p>
+    Section Total:<span id="SectionTotal" class="text-danger">@Model.BudgetBreakdown.Sum(o => o.EstimatedTotal)</span>
+</p>

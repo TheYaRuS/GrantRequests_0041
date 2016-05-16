@@ -1,0 +1,53 @@
+﻿@model GrantRequests.WEB.Models.PaymentInformationViewModel
+
+<div class="container">
+    <button id="ViewProgramBudgetBreakdown" type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#BudgetBreakdown">
+        View
+    </button>
+    <div class="modal fade" role="dialog" id="BudgetBreakdown">
+        <div class="modal-dialog modal-lg " style="min-width:700px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Program Budget Breakdown</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BudgetBreakdown[0].ExpenseType)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BudgetBreakdown[0].EstimatedTotal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BudgetBreakdown[0].Description)
+                            </th>
+                            <th></th>
+                        </tr>
+                        @for (int i = 0; i < Model.BudgetBreakdown.Length; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => model.BudgetBreakdown[i].ExpenseType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.BudgetBreakdown[i].EstimatedTotal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.BudgetBreakdown[i].Description)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <p>
+                        Section Total:<span id="SectionTotal" class="text-danger">@Model.BudgetBreakdown.Sum(o => o.EstimatedTotal)</span>
+                    </p>
+                </div>
+                <div class="modal-footer">                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

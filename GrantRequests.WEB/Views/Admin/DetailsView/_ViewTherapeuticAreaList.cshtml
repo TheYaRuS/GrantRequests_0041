@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GrantRequests.WEB.Models.TherapeuticAreaViewModel>
+
+<p>
+    @Html.ActionLink("Create New", "EditTherapeuticArea")
+</p>
+<table class="table">
+    <tr>
+        <th class="col-md-3">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th class="col-md-3">
+            @Html.DisplayNameFor(model => model.PointPersonalId)
+        </th>
+        <th class="col-md-3">
+            @Html.DisplayNameFor(model => model.TypeRequest)
+        </th>
+        <th class="col-md-3">Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PointPersonal.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeRequest)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTherapeuticArea", new { id=item.Id }) 
+        </td>
+
+    </tr>
+}
+
+</table>

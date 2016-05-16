@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Admin Tools";
+}
+
+<h2>Admin Tools</h2>
+
+<div id="ajaxMenu container text-center">
+        @Html.ActionLink("Type of therapeutic focus area", "TherapeuticArea", null, new { @class = "btn btn-primary btn-sm ajaxMenuItem col-md-3" })
+        @Html.ActionLink("Type of healthcare professionals", "HealthcareProfessionals", null, new { @class = "btn btn-primary btn-sm ajaxMenuItem col-md-2" })
+        @Html.ActionLink("Type of display/exhibit", "DisplayExibit", null, new { @class = "btn btn-primary btn-sm ajaxMenuItem col-md-2" })
+        @Html.ActionLink("Type of specify benefits", "Benefits", null, new { @class = "btn btn-primary btn-sm ajaxMenuItem col-md-2" })
+        @Html.ActionLink("List of Users", "Users", null, new { @class = "btn btn-primary btn-sm ajaxMenuItem col-md-3" })
+</div>
+
+<div id="adminsEditContainer">
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mvcfoolproof")
+    @Scripts.Render("~/bundles/custom")
+    <script>
+        AdminsAjaxMenu.Init();
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+

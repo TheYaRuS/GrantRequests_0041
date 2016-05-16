@@ -1,0 +1,52 @@
+﻿@model IEnumerable<GrantRequests.WEB.Models.VoteResultViewModel>
+
+@using (Html.BeginForm("PointPersonVote", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("requestId", Model)
+    <div class="form-horizontal">
+        <h4>
+            Voting Options
+        </h4>
+
+        <table class="table">
+            <tr>
+                <td>Amount Awarded:</td>
+                <td>$@ViewBag.AmountAwarded</td>
+            </tr>
+            <tr>
+                <td>
+                    Reqiew Decision:
+                </td>
+                <td>
+                    @if (Model.Count() == Model.Count(o => o.Voting == VotingOptions.Approve))
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.Approve, false) Approved </div>
+                    }
+                    else
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.Approve, false, new { disabled = "disabled" }) Approved </div>
+                    }
+                    @if (Model.Count(o => o.Voting == VotingOptions.RFI) > 0)
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.RFI, false) Request for Information </div>
+                    }
+                    else
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.RFI, false, new { disabled = "disabled" }) Request for Information </div>
+                    }
+                    @if (Model.Count(o => o.Voting == VotingOptions.Decline) > 0)
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.Decline, false) Decline</div>
+                    }
+                    else
+                    {
+                        <div>@Html.RadioButton("vote", VotingOptions.Decline, false, new { disabled = "disabled" }) Decline</div>
+                    }
+                    <div>@Html.RadioButton("vote", VotingOptions.Reset, false) Reset Committee Review</div>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="SUBMIT DECISION" class="btn btn-danger btn-sm " />
+    </div>
+}

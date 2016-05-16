@@ -1,0 +1,98 @@
+﻿@model GrantRequests.WEB.Models.RequestLongViewModel
+@using GrantRequests.Common
+<div class="mainInformation">
+    <h2 class="text-center">
+        View Information for <span class="text-primary">@string.Format("{0}-{1:D5}", Model.RequestType.GetDescription(), Model.Id)</span>
+        @Html.ActionLink("Print", "Print", new { requestId = Model.Id }, new { @class = "btn btn-info btn-sm " })
+    </h2>
+    <h3 class="text-center">
+        Status: <span class="text-info">@Model.StatusRequest</span>
+    </h3>
+</div>
+
+<div class="actionMenu text-center">
+    @Html.Partial("DetailsView/_ViewActionMenu", Model)
+    @if (Model.StatusRequest == StatusRequest.Submitted && (User.Identity.GetRole() == Role.Admin || User.Identity.GetRole() == Role.PointPerson))
+    {
+        if (Model.Committee != null)
+        {
+            @Html.Partial("DetailsView/_ViewSubmittedMenu", Model.Committee)
+        }
+    }
+</div>
+
+<div class="container">
+    <div class="voteMenu col-md-6">
+        @if (Model.StatusRequest == StatusRequest.CommitteeReview)
+        {
+            ViewBag.AmountAwarded = Model.PaymentInformation.TotalProgramCost;
+            if ((User.Identity.GetRole() == Role.Approver) && (!Model.VoteResult.FirstOrDefault(o => o.UserId == User.Identity.GetId()).DateTime.HasValue))
+            {
+                @Html.Partial("DetailsView/_ViewApproverVoteMenu", Model.Id)
+            }
+            if ((User.Identity.GetRole() == Role.PointPerson) && (Model.TherapeuticArea.PointPersonalId == User.Identity.GetId()) || (User.Identity.GetRole() == Role.Admin))
+            {
+                @Html.Partial("DetailsView/_ViewPointPersonVoteMenu", Model.VoteResult)
+            }
+        }
+    </div>
+    <div class="voteResult col-md-6">
+        @if (Model.StatusRequest >= StatusRequest.CommitteeReview)
+        {
+            @Html.Partial("DetailsView/_ViewVotinResult", Model.VoteResult);
+        }
+    </div>
+</div>
+
+<div class="detailsInformation">
+    <table class="table">
+        <tr>
+            <th class="col-md-4 text-center">
+                <h4 style="display:inline">Contact Information</h4>
+               
+            </th>
+            <th class="col-md-4 text-center">
+                <h4 style="display:inline">Request Information</h4>
+               
+            </th>
+            <th class="col-md-4 text-center">
+                <h4 style="display:inline">Payment Information</h4>
+               
+            </th>
+        <tr>
+        <tr>
+            <td>
+                @if (Model.ContactInformationId.HasValue)
+                {
+                    @Html.Partial(GrantRequests.WEB.Models.ContactInformationViewModel.detailsView, Model.ContactInformation)
+                }
+            </td>
+            <td>
+                @if (Model.ScientificFundingRequestInformationId.HasValue)
+                {
+                    @Html.Partial(GrantRequests.WEB.Models.ScientificFundingRequestInformationViewModel.detailsView, Model.RequestInformationSF)
+                }
+                @if (Model.PatientAdvocasyRequestInformationId.HasValue)
+                {
+                    @Html.Partial(GrantRequests.WEB.Models.PatientAdvocasyRequestInformationViewModel.detailsView, Model.RequestInformationPA)
+                }
+                @if (Model.DisplayAndExhibitRequestInformationId.HasValue)
+                {
+                    @Html.Partial(GrantRequests.WEB.Models.DisplayAndExhibitRequestInformationViewModel.detailsView, Model.RequestInformationDE)
+                }
+            </td>
+            <td>
+                @if (Model.PaymentInformationId.HasValue)
+                {
+                    @Html.Partial(GrantRequests.WEB.Models.PaymentInformationViewModel.detailsView, Model.PaymentInformation)
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mvcfoolproof")
+    @Scripts.Render("~/bundles/custom")
+}

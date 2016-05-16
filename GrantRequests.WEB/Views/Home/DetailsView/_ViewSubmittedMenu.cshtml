@@ -1,0 +1,37 @@
+﻿@model GrantRequests.WEB.Models.CommitteeViewModel
+
+@using (Html.BeginForm("ManageCommittee", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <span class="text-primary control-label text-left"> Manage Committee </span><input type="submit" value="Save Committee" class="btn btn-danger btn-sm" />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.RequestId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.RecommendedAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RecommendedAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RecommendedAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CommitteeMeetingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CommitteeMeetingDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CommitteeMeetingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApproversId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.ApproversId, Model.ViewDataService.ListOfApproversByRequest(Model.RequestId), new { @class = "form-control list-box", size = Model.ViewDataService.ListOfApproversByRequest(Model.RequestId).Count() })
+                @Html.ValidationMessageFor(model => model.ApproversId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}
+

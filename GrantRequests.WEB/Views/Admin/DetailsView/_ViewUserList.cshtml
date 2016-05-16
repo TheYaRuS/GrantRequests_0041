@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GrantRequests.WEB.Models.UserViewModel>
+@using GrantRequests.Common
+<table class="table">
+    <tr>
+        <th class="col-md-4">
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th class="col-md-4">
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th class="col-md-4">
+            @Html.DisplayNameFor(model => model.Approvers)
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+
+            <td>
+                @if (item.Role == Role.PointPerson)
+                {
+                    @Html.Partial("EditView/_ApproversList", item)
+                }
+            </td>
+        </tr>
+    }
+</table>

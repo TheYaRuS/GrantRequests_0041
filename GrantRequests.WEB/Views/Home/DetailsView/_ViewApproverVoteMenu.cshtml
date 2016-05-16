@@ -1,0 +1,28 @@
+﻿@model int
+@using (Html.BeginForm("ApproverVote", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("requestId", Model)
+    <div class="form-horizontal">
+        <h4>
+            Voting Options
+        </h4>
+        <table class="table">
+            <tr>
+                <td>Amount Awarded:</td>
+                <td>$@ViewBag.AmountAwarded</td>
+            </tr>
+            <tr>
+                <td>
+                    Reqiew Decision:                 
+                </td>
+                <td>
+                    <div>@Html.RadioButton("vote", VotingOptions.Approve, false, new { htmlAttributes = new { @class = "form-control" } }) Approve </div>
+                    <div>@Html.RadioButton("vote", VotingOptions.RFI, true, new { htmlAttributes = new { @class = "form-control" } }) Request for Information </div>
+                    <div>@Html.RadioButton("vote", VotingOptions.Decline, false, new { htmlAttributes = new { @class = "form-control" } }) Decline</div>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="SUBMIT DECISION" class="btn btn-danger btn-sm " />
+    </div>
+}

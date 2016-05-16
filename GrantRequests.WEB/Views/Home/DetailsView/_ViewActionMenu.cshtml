@@ -1,0 +1,15 @@
+﻿@model GrantRequests.WEB.Models.RequestLongViewModel
+
+@if (User.Identity.GetRole() == Role.PointPerson || User.Identity.GetRole() == Role.Admin)
+{
+    if (Model.StatusRequest == StatusRequest.Pending)
+    {
+        @Html.ActionLink("Submit for Decision", "SubmitForDecision", new { requestId = Model.Id }, new { @class = "btn btn-danger btn-sm " })
+        @Html.ActionLink("Request for Information", "RequestForInformation", new { requestId = Model.Id }, new { @class = "btn btn-danger btn-sm " })
+        @Html.ActionLink("Transfer Request Type", "TransferRequestType", new { requestId = Model.Id }, new { @class = "btn btn-danger btn-sm " })
+        @Html.ActionLink("Decline", "Decline", new { requestId = Model.Id }, new { @class = "btn btn-danger btn-sm " })
+    }
+}
+    
+
+

@@ -1,0 +1,41 @@
+﻿@model GrantRequests.WEB.Models.UserViewModel
+<div class="container">
+    <button type="button"
+            class="btn btn-info btn-sm"
+            data-toggle="modal"
+            data-target=@string.Format("#ApproversList{0}",Model.Id)>
+        View approvers list
+    </button>
+    <div class="modal fade" id=@string.Format("ApproversList{0}",Model.Id) role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">View approvers list for @Model.Name</h4>
+                </div>
+                <div class="modal-body">
+                   @using (Html.BeginForm("ChangeApproversList", "Admin"))
+                   {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.Id, new { name = "userId" })
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApproversId, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-6">
+                                @Html.ListBoxFor(model => model.ApproversId, Model.ViewDataService.ListOfApprovers, new { @class = "form-control list-box", size = Model.ViewDataService.ListOfApprovers.Count() })
+                                @Html.ValidationMessageFor(model => model.ApproversId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-6">
+                                <input type="submit" value="Save" class="btn btn-danger" />
+                            </div>
+                        </div>
+                    </div>
+                   }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GrantRequests.WEB.Models.VoteResultViewModel>
+@using GrantRequests.Common
+<h4>Voting Result</h4>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Decision</th>
+        <th>Date/Time</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Approver</td>
+            <td>None</td>
+            <td>
+            @if (item.Voting.HasValue)
+            {
+                @item.Voting.Value
+            }
+            else
+            {
+                @:Pending
+            }
+            </td>
+            <td>
+                @if (item.DateTime.HasValue)
+                {
+                    @item.DateTime.Value
+                }
+            </td>
+        </tr>
+    }
+</table>
+<table class="table">
+    <tr><td>Total Votes</td><td>@Model.Count()</td></tr>
+    <tr><td>Total Approve</td><td>@Model.Count(o => o.Voting == VotingOptions.Approve)</td></tr>
+    <tr><td>Total RFI</td><td>@Model.Count(o => o.Voting == VotingOptions.RFI)</td></tr>
+    <tr><td>Total Decline</td><td>@Model.Count(o => o.Voting == VotingOptions.Decline)</td></tr>
+</table>

@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<GrantRequests.WEB.Models.RequestShortViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TherapeuticAreaId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EventName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfEvent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusRequest)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TherapeuticArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfEvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusRequest)
+            </td>
+            <td>
+                @Html.ActionLink("View", "MainView", new {requestId = item.Id },new { @class = "btn btn-info btn-sm" })
+                @if ((item.StatusRequest == StatusRequest.Draft || item.StatusRequest == StatusRequest.RFI)
+                    &&(User.Identity.GetRole() == Role.Admin   || User.Identity.GetRole() == Role.Requestor))
+                {
+                    @Html.ActionLink("Edit", "CreatePartRequest", new { requestId = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                }         
+            </td>
+        </tr>
+    }
+</table>

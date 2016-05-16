@@ -1,0 +1,94 @@
+﻿@model GrantRequests.WEB.Models.PaymentInformationViewModel
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestedFunding)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestedFunding)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalProgramCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalProgramCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BudgetBreakdown)
+        </dt>
+
+        <dd>
+            @Html.Partial("DetailsView/_ViewBudgetBreakdown", Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FundingRequestLetter)
+        </dt>
+
+        <dd>
+            @if (Model.FundingRequestLetter != null)
+            {
+                @Html.ActionLink("Download", "GetFile", new { fileName = Model.FundingRequestLetter })
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AreDifferentLevelsOfFunding)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreDifferentLevelsOfFunding)
+        </dd>
+        @if (Model.AreDifferentLevelsOfFunding == true)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.DifferentLevelsOfFundingDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DifferentLevelsOfFundingDescription)<br />
+                @if (Model.DifferentLevelsOfFunding != null)
+                {
+                    @Html.ActionLink("Download", "GetFile", new { fileName = Model.DifferentLevelsOfFunding })
+                }
+            </dd>
+
+
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.AreOpportunitiesOrBenefits)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreOpportunitiesOrBenefits)
+        </dd>
+        @if (Model.AreOpportunitiesOrBenefits == true)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.OpportunitiesOrBenefits)
+            </dt>
+
+            <dd>
+                <ul>
+                    @foreach (var item in Model.OpportunitiesOrBenefits)
+                {
+                        <li>@item.Title</li>
+                    }
+                </ul>
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.IsOrganizationOrPhysicianPractice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsOrganizationOrPhysicianPractice)
+        </dd>
+
+    </dl>
+</div>
+

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<GrantRequests.WEB.Models.BenefitViewModel>
+
+<p>
+    @Html.ActionLink("Create New", "EditBenefits")
+</p>
+<table class="table">
+    <tr>
+        <th class="col-md-6">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th class="col-md-6">Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditBenefits", new { id=item.Id })           
+        </td>
+    </tr>
+}
+
+</table>
