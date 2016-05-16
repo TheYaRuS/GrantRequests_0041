@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using GrantRequests.Common;
-using Foolproof;
-using System.ComponentModel.DataAnnotations;
-using GrantRequests.WEB.Services;
-using GrantRequests.DAL.Entities;
 
 namespace GrantRequests.WEB.Models
 {
