@@ -56,6 +56,7 @@ namespace GrantRequests.WEB.Controllers
 
         public ActionResult Logoff()
         {
+            //this test commit
             accountService.LogOffUser();
             return RedirectToAction("Index", "Home");
         }
